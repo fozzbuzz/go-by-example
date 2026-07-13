@@ -68,4 +68,50 @@ func main() {
 	fmt.Println("2d len:", len(twoD))
 	fmt.Println("2d cap:", cap(twoD))
 	fmt.Printf("type:%T\n", twoD)
+
+	// Other slices functions
+	fmt.Println("All")
+	for i, v := range slices.All(t2) {
+		fmt.Println(i, ":", v)
+	}
+
+	fmt.Println("Backward")
+	for i, v := range slices.Backward(t2) {
+		fmt.Println(i, ":", v)
+	}
+
+	fmt.Println("Chunk")
+	for c := range slices.Chunk(t2, 2) {
+		fmt.Println(c)
+	}
+
+	fmt.Println("Clip")
+	a := [...]int{0, 1, 2, 3, 4, 5}
+	// low (incl) : high (excl) : max cap
+	b := a[:3:6]
+	fmt.Println(b)
+	fmt.Println("len:", len(b))
+	fmt.Println("cap:", cap(b))
+	clip := slices.Clip(b)
+	fmt.Println(clip)
+	fmt.Println("len:", len(clip))
+	fmt.Println("cap:", cap(clip))
+
+	fmt.Println("Clone")
+	d := [][2]int{{0, 1}, {2, 3}}
+	clone := slices.Clone(d)
+	fmt.Println("og:", d)
+	fmt.Println("clone:", clone)
+	clone[0][0] = 99
+	fmt.Println("og:", d)
+	fmt.Println("clone:", clone)
+
+	fmt.Println("Compact")
+	e := []int{0, 1, 1, 2, 2, 3}
+	comp := slices.Compact(e)
+	fmt.Println(comp)
+	fmt.Println("len:", len(comp))
+	fmt.Println("cap:", cap(comp))
+	comp = slices.Clip(comp)
+	fmt.Println("cap:", cap(comp))
 }
