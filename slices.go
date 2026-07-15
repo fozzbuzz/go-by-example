@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"slices"
+	"strings"
 )
 
 func main() {
@@ -114,4 +115,88 @@ func main() {
 	fmt.Println("cap:", cap(comp))
 	comp = slices.Clip(comp)
 	fmt.Println("cap:", cap(comp))
+
+	fmt.Println("Concat")
+	s1 := []int{0, 1, 2}
+	s2 := []int{3, 4, 5}
+	s1_s2 := slices.Concat(s1, s2)
+	fmt.Println(s1_s2)
+	s1 = append(s1, 6)
+	// This is a different slice
+	fmt.Println(s1)
+
+	fmt.Println("Contains")
+	s3 := []int{1, 3, 5}
+	fmt.Println(slices.Contains(s3, 1))
+	fmt.Println(slices.Contains(s3, 2))
+
+	fmt.Println("ContainsFunc")
+	fmt.Println("has even:", slices.ContainsFunc(s3, func(x int) bool {
+		return x%2 == 0
+	}))
+
+	fmt.Println("Delete")
+	s3 = slices.Delete(s3, 1, 2)
+	fmt.Println(s3)
+	fmt.Println("cap:", cap(s3))
+
+	fmt.Println("DeleteFunc")
+	s4 := []int{0, 1, 2, 3, 4, 5}
+	fmt.Println(s4)
+	s4 = slices.DeleteFunc(s4, func(x int) bool {
+		return x%2 == 0
+	})
+	fmt.Println("odds:", s4)
+
+	fmt.Println("Equal")
+	s5 := []byte{0, 22, 33, 44}
+	s5_1 := []byte{0, 22, 33, 44}
+	fmt.Println(s5)
+	fmt.Println(s5_1)
+	fmt.Println("s5 == s5_1:", slices.Equal(s5, s5_1))
+	s5_1 = []byte{0, 33, 22, 44}
+	fmt.Println(s5)
+	fmt.Println(s5_1)
+	fmt.Println("s5 == s5_1:", slices.Equal(s5, s5_1))
+
+	fmt.Println("Grow")
+	grow := []string{"foo", "bar"}
+	fmt.Println("cap:", cap(grow))
+	grow = slices.Grow(grow, 9999)
+	fmt.Println("grow:", cap(grow))
+
+	fmt.Println("Index")
+	idx := []rune{97, 98, 99}
+	fmt.Println(idx)
+	fmt.Println("idx(98):", slices.Index(idx, 98))
+	fmt.Println("idx(44):", slices.Index(idx, 44))
+
+	fmt.Println("IndexFunc")
+	idxf := []rune{1, 2, 3, 4}
+	fmt.Println(idxf)
+	fmt.Println("idx(even):", slices.IndexFunc(idxf, func(x rune) bool {
+		return x%2 == 0
+	}))
+
+	fmt.Println("Insert")
+	insert := []uint16{33, 44, 55}
+	fmt.Println(insert)
+	fmt.Println("cap:", cap(insert))
+	insert = slices.Insert(insert, 0, 10, 11, 12, 13, 14, 15)
+	fmt.Println(insert)
+	fmt.Println("cap:", cap(insert))
+
+	fmt.Println("IsSorted")
+	fmt.Println(insert)
+	fmt.Println("sorted:", slices.IsSorted(insert))
+	insert = append(insert, 1)
+	fmt.Println(insert)
+	fmt.Println("sorted:", slices.IsSorted(insert))
+
+	fmt.Println("IsSortedFunc")
+	sortedf := []string{"alex", "ALEX", "maya"}
+	fmt.Println(sortedf)
+	fmt.Println("sortedf:", slices.IsSortedFunc(sortedf, func(a, b string) int {
+		return strings.Compare(strings.ToLower(a), strings.ToLower(b))
+	}))
 }
